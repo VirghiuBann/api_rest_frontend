@@ -58,7 +58,7 @@ class Feed extends Component {
     const graphQuery = {
       query: `
         {
-          posts {
+          posts(page: ${page}) {
             posts {
               _id
               title
@@ -96,7 +96,7 @@ class Feed extends Component {
               imagePath: post.imageUrl,
             };
           }),
-          totalPosts: resData.data.posts.posts.totalItems,
+          totalPosts: resData.data.posts.totalPosts,
           postsLoading: false,
         });
       })
@@ -207,6 +207,7 @@ class Feed extends Component {
             );
             updatedPosts[postIndex] = post;
           } else {
+            updatedPosts.pop();
             updatedPosts.unshift(post);
           }
           return {
